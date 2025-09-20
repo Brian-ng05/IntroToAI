@@ -64,8 +64,21 @@ class ChatroomGUI(tk.Tk):
                                font=("Helvetica", 12, "bold"), command=lambda text=btn_text: self.send_message(text))
             button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5, pady=5)
     
+    def reset_conversation(self):
+        """Resets the conversation to the beginning."""
+        self.chat_display.config(state="normal")
+        self.chat_display.delete(1.0, tk.END)
+        self.chat_display.config(state="disabled")
+        self.current_stage = "gender"
+        self.add_message("Hi! i am your Fashion AI Assistent.\nPlease choose your gender so i can create an outfit for you!", "AI")
+        self.update_buttons()
+
     def send_message(self, message):
         """Processes the user's button click and updates the conversation state."""
+        if message == "Start Over":
+            self.reset_conversation()
+            return
+            
         self.add_message(message, "user")
 
         if self.current_stage == "gender":
