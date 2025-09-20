@@ -1,4 +1,5 @@
 import tkinter as tk
+from Backend import GetCommentsFromFakeAI
 
 class ChatroomGUI(tk.Tk):
     def __init__(self):
@@ -8,6 +9,7 @@ class ChatroomGUI(tk.Tk):
         self.configure(bg="#2D3B48")
         
         self.current_stage = "gender"  # State variable to track conversation stage
+        self.user_input: list[str] = []
 
         # Chat display frame (1st pack)
         self.chat_frame = tk.Frame(self, bg="#2D3B48")
@@ -33,10 +35,11 @@ class ChatroomGUI(tk.Tk):
         # Call the method to create the initial gender buttons
         self.update_buttons()
 
-    def add_message(self, message, sender):
+    def add_message(self, message: str, sender):
         """Adds a message to the chat display."""
         self.chat_display.config(state="normal")
         if sender == "user":
+            self.user_input.append(message.replace(" ", ""))
             self.chat_display.tag_configure("user", justify="right")
             self.chat_display.insert(tk.END, "User: " + message + "\n\n", "user")
         else:
@@ -66,6 +69,7 @@ class ChatroomGUI(tk.Tk):
     
     def reset_conversation(self):
         """Resets the conversation to the beginning."""
+        self.user_input.clear()
         self.chat_display.config(state="normal")
         self.chat_display.delete(1.0, tk.END)
         self.chat_display.config(state="disabled")
@@ -88,23 +92,12 @@ class ChatroomGUI(tk.Tk):
             self.add_message("What color do you have in mind?", "AI")
             self.current_stage = "color"
         elif self.current_stage == "color":
-            # --- This is where you connect to the backend ---
-            #
-            # The user's choices (gender, occasion, color) are saved in a way that your backend can access them.
-            # You would import your backend module and call a function here, passing the choices.
-            # Example:
-            # from your_backend_file import generate_outfit
-            # recommendation = generate_outfit(gender, occasion, color)
-            # self.add_message(recommendation, "AI")
-            #
-            # For now, we'll just show a placeholder message.
-            #
-            self.add_message("Thank you! Here is your fashion recommendation. You can now choose to start over.", "AI")
+            
+            self.add_message(message= "Thank you! Here is your fashion recommendation.", sender= "AI")
+            self.add_message(message= GetCommentsFromFakeAI(self.user_input), sender= "AI")
+            self.add_message(message= "Now, you can start over.", sender= "AI")
+
             self.current_stage = "done"
         
         # Update the buttons based on the new stage
         self.update_buttons()
-
-if __name__ == "__main__":
-    app = ChatroomGUI()
-    app.mainloop()
