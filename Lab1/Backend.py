@@ -27,26 +27,23 @@ def GetCommentsFromFakeAI(input: list[str]) -> str:
     GENDER_INPUT = input[0]
     OCCASION_INPUT = input[1]
     COLOR_INPUT = input[2]
-
     res = ""
 
-    # TODO: Ba cái loop cơ chế giống nhau thì nên viết một function.
     def GetCommentForInput(input: str, comments: Enum):
-        for item in (comments):
-            input_matches: bool = (item.name == input)
+        try:
+            for item in (comments):
+                input_matches: bool = (item.name == input)
 
-            if input_matches:
-                comment: str = item.value + " "
-                
-                return comment
-            
-    try:
-            res += GetCommentForInput(input= GENDER_INPUT, comments= GenderComments)
-            res += GetCommentForInput(input= OCCASION_INPUT, comments= OccasionComments)
-            res += GetCommentForInput(input= COLOR_INPUT, comments= ColorComments)  
-            
-    
-    except Exception as e:
-        print(e)
-    
+                if input_matches:
+                    comment: str = item.value + " "
+                    
+                    return comment
+        except Exception as e:
+            print(e)
+        
+     
+    res += GetCommentForInput(input= GENDER_INPUT, comments= GenderComments)
+    res += GetCommentForInput(input= OCCASION_INPUT, comments= OccasionComments)
+    res += GetCommentForInput(input= COLOR_INPUT, comments= ColorComments)               
+        
     return res
