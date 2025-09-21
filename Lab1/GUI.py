@@ -11,17 +11,21 @@ theme_path = os.path.join(script_dir, "cherry.json")
 customtkinter.set_default_color_theme(theme_path)
 
 class ChatroomGUI(customtkinter.CTk):
+
     def __init__(self):
         super().__init__()
         self.title("AI Chat Box For Fashion")
         self.geometry("450x550")
+
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
+
         
         self.current_stage = "gender"  # State variable to track conversation stage
         self.user_input: list[str] = []
 
         # Chat display frame (1st pack)
+
         self.chat_frame = customtkinter.CTkFrame(self)
         self.chat_frame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
         self.chat_frame.grid_rowconfigure(0, weight=1)
@@ -38,6 +42,7 @@ class ChatroomGUI(customtkinter.CTk):
         self.button_frame.grid_columnconfigure(1, weight=1)
         self.button_frame.grid_columnconfigure(2, weight=1)
         self.button_frame.grid_columnconfigure(3, weight=1)
+
         
         # Initial AI message
         self.add_message("Hi! i am your Fashion AI Assistent.\nPlease choose your gender so i can create an outfit for you!", "AI")
@@ -47,6 +52,7 @@ class ChatroomGUI(customtkinter.CTk):
 
     def add_message(self, message: str, sender):
         """Adds a message to the chat display."""
+
         self.chat_display.configure(state="normal")
         if sender == "user":
             self.user_input.append(message.replace(" ", ""))
@@ -56,10 +62,12 @@ class ChatroomGUI(customtkinter.CTk):
         self.chat_display.see(tk.END)
         self.chat_display.configure(state="disabled")
 
+
     def update_buttons(self):
         """Clears existing buttons and creates new ones based on the current stage."""
         for widget in self.button_frame.winfo_children():
             widget.destroy()
+
 
         # Reset column weights for a clean layout
         for col in range(4):
@@ -98,13 +106,16 @@ class ChatroomGUI(customtkinter.CTk):
             button = customtkinter.CTkButton(self.button_frame, text=buttons[0], command=lambda text=buttons[0]: self.send_message(text))
             button.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
                 
+
     
     def reset_conversation(self):
         """Resets the conversation to the beginning."""
         self.user_input.clear()
+
         self.chat_display.configure(state="normal")
         self.chat_display.delete("1.0", tk.END)
         self.chat_display.configure(state="disabled")
+
         self.current_stage = "gender"
         self.add_message("Hi! i am your Fashion AI Assistent.\nPlease choose your gender so i can create an outfit for you!", "AI")
         self.update_buttons()
