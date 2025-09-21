@@ -1,6 +1,3 @@
-
-import customtkinter
-
 from GUI import ChatroomGUI
 
 if __name__ == "__main__":
