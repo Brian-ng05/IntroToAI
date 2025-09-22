@@ -38,11 +38,6 @@ class ChatroomGUI(customtkinter.CTk):
         # Button frame (2nd pack)
         self.button_frame = customtkinter.CTkFrame(self)
         self.button_frame.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
-        self.button_frame.grid_columnconfigure(0, weight=1)
-        self.button_frame.grid_columnconfigure(1, weight=1)
-        self.button_frame.grid_columnconfigure(2, weight=1)
-        self.button_frame.grid_columnconfigure(3, weight=1)
-
         
         # Initial AI message
         self.add_message("Hi! i am your Fashion AI Assistent.\nPlease choose your gender so i can create an outfit for you!", "AI")
@@ -117,7 +112,7 @@ class ChatroomGUI(customtkinter.CTk):
         self.chat_display.configure(state="disabled")
 
         self.current_stage = "gender"
-        self.add_message("Hi! i am your Fashion AI Assistent.\nPlease choose your gender so i can create an outfit for you!", "AI")
+        self.add_message("Hi! i am your Fashion AI Assistant.\nPlease choose your gender so i can create an outfit for you!", "AI")
         self.update_buttons()
 
     def send_message(self, message):
